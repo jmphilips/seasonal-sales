@@ -8,22 +8,20 @@ function filterCategory(value, numberz) {
 
 
 // Takes an array and outputs the array to the DOM
-function createOutput(array, cat_id_string) {
+function createOutput(array) {
 	for (var i = 0; i < array.length; i++) {
 
-		var 	product = array[i],
+		var product = array[i],
 			newDiv = document.createElement("div"),
 			name = document.createElement("h1"),
 			price = document.createElement("h2");
-			category = document.createElement("p")
 
 			name.innerText = product.name;
 			price.innerText = product.price;
-			category.innerText = cat_id_string;
-
+			
 			newDiv.appendChild(name);
 			newDiv.appendChild(price);
-			newDiv.appendChild(category);
+			
 
 			outputEl.appendChild(newDiv);
 	};
@@ -39,35 +37,51 @@ function loadProductJson(eventObject) {
 	
 
 	// Creates an array from the JSON based on their categorie 1, 2, or 3
-	var categoryOne = products.filter(function(product) {
-		var numberz = filterCategory(product, 1);
-		return numberz 
-	});
 
-	var categoryTwo = products.filter(function(product) {
-		var numberz = filterCategory(product, 2);
-		return numberz 
-	});
+		var selectNumber = null;
 
-	var categoryThree = products.filter(function(product) {
-		var numberz = filterCategory(product, 3);
-		return numberz 
-	});
+		var categoryOne = products.filter(function(product) {
+			var numberz = filterCategory(product, 1);
+			return numberz 
+		});
 
-	createOutput(categoryOne, "Apparel");
-	createOutput(categoryTwo, "Furniture");
-	createOutput(categoryThree, "Household")
-};
+		var categoryTwo = products.filter(function(product) {
+			var numberz = filterCategory(product, 2);
+			return numberz 
+		});
+
+		var categoryThree = products.filter(function(product) {
+			var numberz = filterCategory(product, 3);
+			return numberz 
+		});
+
+		createOutput(categoryOne);
+		createOutput(categoryTwo);
+		createOutput(categoryThree);
+		productArray = [categoryOne, categoryTwo, categoryThree];
+
+		selectSeason.addEventListener("change", function(){
+		
+		selectNumber = selectSeason.value;
 
 
-var selectNumber = null;
-selectSeason.addEventListener("change", function(){
-	selectNumber = selectSeason.value;
-	console.log(selectNumber)
-});
+		outputEl.innerHTML = null;
+		for (var i = 0; i < productArray.length; i++) {
+			
+			var currentArray = productArray[i];
+			if (currentArray[0].category_id == selectNumber) {
+				for (var j = 0; j < currentArray.length; j++) {
+					currentArray[j].price = currentArray[j].price - (currentArray[j].price * discountArray[i])
 
-function calcuteDiscount
+					}
+				};
+				console.log("Current", currentArray);
+				createOutput(currentArray)
+			};
+			
+		});	
 
+	};		
 
 
 

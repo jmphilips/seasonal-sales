@@ -5,6 +5,7 @@ var selectSeason = document.getElementById("season");
 
 
 
+var discountArray = [];
 
 function discountLoaded(eventObject) {
 	var discounts = JSON.parse(eventObject.target.response);
@@ -15,6 +16,13 @@ function discountLoaded(eventObject) {
 		newSelect.innerText = discounts.categories[i].season_discount;
 		selectSeason.appendChild(newSelect)
 	};
+	console.log(discounts)
+
+	for (var i = 0; i < discounts.categories.length; i++) {
+		console.log(discounts.categories[i].discount)
+		discountArray.push(discounts.categories[i].discount);
+	};
+	console.log(discountArray)
 };
 
 
